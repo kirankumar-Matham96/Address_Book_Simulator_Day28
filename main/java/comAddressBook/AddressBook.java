@@ -142,33 +142,37 @@ public class AddressBook {
         System.out.println("Select option: \n1.Add Contact\n2.Edit Contact\n" +
                 "3.Delete Contact\n4.Exit");
         int option = scannerForAddressBook.scannerProvider().nextInt();
-        switch (option) {
-            case 1:
-                if (!isContactExist(getName())) {
-                    addContact();
-                } else {
-                    System.out.println("Contact already exists!");
-                }
-                break;
-            case 2:
-                String name = getName();
-                if (isContactExist(name)) {
-                    editDetails(name);
-                } else {
-                    System.out.println("Contact does not exists!");
-                }
-                break;
-            case 3:
-                String name1 = getName();
-                if (isContactExist(name1)) {
-                    Contacts contact = getContact(name1);
-                    deleteContact(contact);
-                } else {
-                    System.out.println("Contact does not exists!");
-                }
-                break;
-            default:
-                System.out.println("Thanks!");
+        boolean isExit = false;
+        while (!isExit) {
+            switch (option) {
+                case 1:
+                    if (!isContactExist(getName())) {
+                        addContact();
+                    } else {
+                        System.out.println("Contact already exists!");
+                    }
+                    break;
+                case 2:
+                    String name = getName();
+                    if (isContactExist(name)) {
+                        editDetails(name);
+                    } else {
+                        System.out.println("Contact does not exists!");
+                    }
+                    break;
+                case 3:
+                    String name1 = getName();
+                    if (isContactExist(name1)) {
+                        Contacts contact = getContact(name1);
+                        deleteContact(contact);
+                    } else {
+                        System.out.println("Contact does not exists!");
+                    }
+                    break;
+                default:
+                    System.out.println("Thanks!");
+                    isExit = true;
+            }
         }
     }
 }
