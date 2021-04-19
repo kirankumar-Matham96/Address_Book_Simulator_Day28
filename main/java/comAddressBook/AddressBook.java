@@ -6,6 +6,10 @@ public class AddressBook {
     ArrayList<Contacts> contactsList = new ArrayList<>();
     ScannerForAddressBook scannerForAddressBook = new ScannerForAddressBook();
 
+    public ArrayList<Contacts> getContactsList() {
+        return contactsList;
+    }
+
     /**
      * method to add new contact from the console
      */
