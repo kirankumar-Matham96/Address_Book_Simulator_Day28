@@ -1,12 +1,14 @@
 package comAddressBook;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class AddressBook {
-    ArrayList<Contacts> contactsList = new ArrayList<>();
+    List<Contacts> contactsList = new ArrayList<>();
     ScannerForAddressBook scannerForAddressBook = new ScannerForAddressBook();
+    ContactsFileIOService contactsFileIOService = new ContactsFileIOService();
 
-    public ArrayList<Contacts> getContactsList() {
+    public List<Contacts> getContactsList() {
         return contactsList;
     }
 
@@ -31,7 +33,9 @@ public class AddressBook {
         contacts.setZip(scannerForAddressBook.scannerProvider().nextInt());
         System.out.println("Please enter phone number");
         contacts.setPhoneNumber(scannerForAddressBook.scannerProvider().nextLine());
-        contactsList.add(contacts);
+        contactsList.add(contacts);//adding to the list
+        contactsFileIOService.writeToFile(contactsList);//writing into the file
+        contactsFileIOService.printData();//print data from the file to the console
     }
 
     /**
@@ -143,11 +147,11 @@ public class AddressBook {
      * to access the book
      */
     public void accessAddressBook() {
-        System.out.println("Select option: \n1.Add Contact\n2.Edit Contact\n" +
-                "3.Delete Contact\n4.Exit");
-        int option = scannerForAddressBook.scannerProvider().nextInt();
         boolean isExit = false;
         while (!isExit) {
+            System.out.println("Select option: \n1.Add Contact\n2.Edit Contact\n" +
+                                                "3.Delete Contact\n4.Exit");
+            int option = scannerForAddressBook.scannerProvider().nextInt();
             switch (option) {
                 case 1:
                     if (!isContactExist(getName())) {
