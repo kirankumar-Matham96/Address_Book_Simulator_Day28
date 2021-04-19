@@ -1,10 +1,15 @@
 package comAddressBook;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class AddressBookSimulator {
     Map<String, AddressBook> booksMap = new HashMap<>();
+    Map<String, List<List<Contacts>>> cityPersonMap = new HashMap<>();
+    Map<String, List<List<Contacts>>> statePersonMap = new HashMap<>();
     ScannerForAddressBook scannerForAddressBook = initializeScanner();
     static AddressBookSimulator addressBookSimulator = new AddressBookSimulator();
 
@@ -16,7 +21,7 @@ public class AddressBookSimulator {
         boolean isExit = false;
         while(!isExit) {
             System.out.println("Select options: \n1.Add Book\n2.AccessBook\n3.Search contact by city/state" +
-                                               "\n4.Exit");
+                                               "\n4.Show the contacts by city\n5.Show the contacts by state\n6.Exit");
             int option = scannerForAddressBook.scannerProvider().nextInt();
             switch(option) {
                 case 1:
@@ -27,6 +32,12 @@ public class AddressBookSimulator {
                     break;
                 case 3:
                     addressBookSimulator.searchContactByCityOrState();
+                    break;
+                case 4:
+                    addressBookSimulator.showContactsByCity();
+                    break;
+                case 5:
+                    addressBookSimulator.showContactByState();
                     break;
                 default:
                     isExit = true;
@@ -75,6 +86,44 @@ public class AddressBookSimulator {
                             contact.getState().equals(placeName))
                     .findFirst().orElse(null));
         });
+    }
+
+    /**
+     * Show the contacts by city
+     */
+    public void showContactsByCity(){
+        System.out.println("Enter the city name to search contacts");
+        String city = scannerForAddressBook.scannerProvider().nextLine();
+        List<List<Contacts>> listOfCityContactsList = new ArrayList<>();
+        List<Contacts> cityContactList;
+        for(Map.Entry<String, AddressBook> entry : addressBookSimulator.booksMap.entrySet()) {
+            cityContactList = entry.getValue().getContactsList().stream()
+                    .filter(contact ->
+                            contact.getCity().equals(city))
+                    .collect(Collectors.toList());
+            listOfCityContactsList.add(cityContactList);
+        }
+        addressBookSimulator.cityPersonMap.put(city,listOfCityContactsList);
+        System.out.println(addressBookSimulator.cityPersonMap);
+    }
+
+    /**
+     * Show the contacts by state
+     */
+    public void showContactByState(){
+        System.out.println("Enter the state name to search contacts");
+        String state = scannerForAddressBook.scannerProvider().nextLine();
+        List<List<Contacts>> listOfStateContactsList = new ArrayList<>();
+        List<Contacts> stateContactList;
+        for (Map.Entry<String, AddressBook> entry : addressBookSimulator.booksMap.entrySet()) {
+            stateContactList = entry.getValue().getContactsList().stream()
+                    .filter(contact ->
+                            contact.getState().equals(state))
+                    .collect(Collectors.toList());
+            listOfStateContactsList.add(stateContactList);
+        }
+        addressBookSimulator.statePersonMap.put(state,listOfStateContactsList);
+        System.out.println(addressBookSimulator.statePersonMap);
     }
 
     /**
