@@ -42,7 +42,7 @@ public class AddressBookSimulator {
                     addressBookSimulator.countContactsByCityOrState();
                     break;
                 case 7:
-                    addressBookSimulator.sortByFirstName();
+                    addressBookSimulator.sortingOptions();
                     break;
                 default:
                     isExit = true;
@@ -149,6 +149,39 @@ public class AddressBookSimulator {
     }
 
     /**
+     * sorting options
+     */
+    public void sortingOptions(){
+        ScannerForAddressBook scannerForAddressBook = initializeScanner();
+        boolean isExit = false;
+        while(!isExit) {
+            System.out.println("Select the option: \n1.Sort by first name\n2.Sort by city\n3.Sort by state\n4.Sort by zip\n5.Exit");
+            try {
+                int option = scannerForAddressBook.scannerProvider().nextInt();
+                switch(option) {
+                    case 1:
+                        addressBookSimulator.sortByFirstName();
+                        break;
+                    case 2:
+                        addressBookSimulator.sortContactByCity();
+                        break;
+                    case 3:
+                        addressBookSimulator.sortContactByState();
+                        break;
+                    case 4:
+                        addressBookSimulator.sortContactByZip();
+                        break;
+                    default:
+                        isExit = true;
+                        System.out.println("Thank you!");
+                }
+            }catch(Exception e){
+                System.out.println("Invalid option selected!, Please select from the given.");
+            }
+        }
+    }
+
+    /**
      * sort by first name
      */
     public void sortByFirstName() {
@@ -157,6 +190,45 @@ public class AddressBookSimulator {
                     .getContactsList()
                     .stream()
                     .sorted(Comparator.comparing(Contacts::getFirstName))
+                    .collect(Collectors.toList()));
+        });
+    }
+
+    /**
+     * sort contacts by city
+     */
+    public void sortContactByCity() {
+        addressBookSimulator.booksMap.entrySet().forEach(entry -> {
+            System.out.println("sorted contacts by city: " + entry.getValue()
+                    .getContactsList()
+                    .stream()
+                    .sorted(Comparator.comparing(Contacts::getCity))
+                    .collect(Collectors.toList()));
+        });
+    }
+
+    /**
+     * sort contacts by state
+     */
+    public void sortContactByState() {
+        addressBookSimulator.booksMap.entrySet().forEach(entry -> {
+            System.out.println("sorted contacts by state: " + entry.getValue()
+                    .getContactsList()
+                    .stream()
+                    .sorted(Comparator.comparing(Contacts::getState))
+                    .collect(Collectors.toList()));
+        });
+    }
+
+    /**
+     * sort contacts by zip
+     */
+    public void sortContactByZip() {
+        addressBookSimulator.booksMap.entrySet().forEach(entry -> {
+            System.out.println("sorted contacts by zip: " + entry.getValue()
+                    .getContactsList()
+                    .stream()
+                    .sorted(Comparator.comparing(Contacts::getZip))
                     .collect(Collectors.toList()));
         });
     }
