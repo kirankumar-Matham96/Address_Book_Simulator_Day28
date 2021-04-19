@@ -36,6 +36,7 @@ public class AddressBook {
         contactsList.add(contacts);//adding to the list
         contactsFileIOService.writeToFile(contactsList);//writing into the file
         contactsFileIOService.printData();//print data from the file to the console
+
     }
 
     /**
@@ -178,6 +179,7 @@ public class AddressBook {
                     }
                     break;
                 default:
+                    contactsFileIOService.writeToCSVFile(contactsList);
                     System.out.println("Thanks!");
                     isExit = true;
             }
