@@ -21,7 +21,8 @@ public class AddressBookSimulator {
         boolean isExit = false;
         while(!isExit) {
             System.out.println("Select options: \n1.Add Book\n2.AccessBook\n3.Search contact by city/state" +
-                                               "\n4.Show the contacts by city\n5.Show the contacts by state\n6.Exit");
+                                               "\n4.Show the contacts by city\n5.Show the contacts by state" +
+                                               "\n6.Find number of contacts in a city/state\n7.Exit");
             int option = scannerForAddressBook.scannerProvider().nextInt();
             switch(option) {
                 case 1:
@@ -38,6 +39,9 @@ public class AddressBookSimulator {
                     break;
                 case 5:
                     addressBookSimulator.showContactByState();
+                    break;
+                case 6:
+                    addressBookSimulator.countContactsByCityOrState();
                     break;
                 default:
                     isExit = true;
@@ -124,6 +128,23 @@ public class AddressBookSimulator {
         }
         addressBookSimulator.statePersonMap.put(state,listOfStateContactsList);
         System.out.println(addressBookSimulator.statePersonMap);
+    }
+
+    /**
+     * Find number of contacts in a city/state
+     */
+    public void countContactsByCityOrState(){
+        System.out.println("Enter the city/state name to search number of contacts");
+        String placeName2 = scannerForAddressBook.scannerProvider().nextLine();
+        addressBookSimulator.booksMap.entrySet().forEach(entry -> {
+            System.out.println(entry.getKey());
+            System.out.println("Contacts in a city/state: " +
+                    entry.getValue()
+                            .getContactsList().stream()
+                            .filter(contact -> contact.getCity().equals(placeName2) ||
+                                    contact.getState().equals(placeName2))
+                            .count());
+        });
     }
 
     /**
