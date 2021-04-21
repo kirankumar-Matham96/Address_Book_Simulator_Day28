@@ -1,5 +1,9 @@
 package comAddressBook;
 
+import com.opencsv.exceptions.CsvDataTypeMismatchException;
+import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +19,7 @@ public class AddressBook {
     /**
      * method to add new contact from the console
      */
-    public void addContact() {
+    public void addContact() throws CsvRequiredFieldEmptyException, CsvDataTypeMismatchException, IOException {
         Contacts contacts = new Contacts();
         System.out.println("Please enter first name");
         contacts.setFirstName(scannerForAddressBook.scannerProvider().nextLine());
@@ -36,7 +40,7 @@ public class AddressBook {
         contactsList.add(contacts);//adding to the list
         contactsFileIOService.writeToFile(contactsList);//writing into the file
         contactsFileIOService.printData();//print data from the file to the console
-
+        contactsFileIOService.writeToCSVFile(contactsList);//writing list to the CSV file
     }
 
     /**
@@ -48,9 +52,9 @@ public class AddressBook {
             boolean isExit = false;
             while (!isExit) {
                 System.out.println("Select option:" + "\n" + "1.first name" + "\n" + "2.last name" +
-                                                      "\n" + "3.address" + "\n" + "4.city" + "\n" +
-                                                      "5.state" + "\n" + "6.email" + "\n" + "7.zip" +
-                                                      "\n" + "8.phone number" + "\n" + "9.exit");
+                        "\n" + "3.address" + "\n" + "4.city" + "\n" +
+                        "5.state" + "\n" + "6.email" + "\n" + "7.zip" +
+                        "\n" + "8.phone number" + "\n" + "9.exit");
                 switch (scannerForAddressBook.scannerProvider().nextInt()) {
                     case 1:
                         System.out.println("Enter new first name to change: ");
@@ -147,11 +151,11 @@ public class AddressBook {
     /**
      * to access the book
      */
-    public void accessAddressBook() {
+    public void accessAddressBook() throws CsvRequiredFieldEmptyException, CsvDataTypeMismatchException, IOException {
         boolean isExit = false;
         while (!isExit) {
             System.out.println("Select option: \n1.Add Contact\n2.Edit Contact\n" +
-                                                "3.Delete Contact\n4.Exit");
+                    "3.Delete Contact\n4.Exit");
             int option = scannerForAddressBook.scannerProvider().nextInt();
             switch (option) {
                 case 1:
@@ -179,7 +183,7 @@ public class AddressBook {
                     }
                     break;
                 default:
-                    contactsFileIOService.writeToCSVFile(contactsList);
+//                    contactsFileIOService.writeToCSVFile();
                     System.out.println("Thanks!");
                     isExit = true;
             }

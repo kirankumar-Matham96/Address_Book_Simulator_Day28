@@ -1,13 +1,24 @@
 package comAddressBook;
 
+
+import com.opencsv.bean.CsvBindByPosition;
+
 public class Contacts {
+    @CsvBindByPosition(position = 0)
     private String firstName;
+    @CsvBindByPosition(position = 1)
     private String lastName;
+    @CsvBindByPosition(position = 2)
     private String address;
+    @CsvBindByPosition(position = 3)
     private String city;
+    @CsvBindByPosition(position = 4)
     private String state;
+    @CsvBindByPosition(position = 5)
     private String email;
+    @CsvBindByPosition(position = 6)
     private int zip;
+    @CsvBindByPosition(position = 7)
     private String phoneNumber;
 
     public String getFirstName() {

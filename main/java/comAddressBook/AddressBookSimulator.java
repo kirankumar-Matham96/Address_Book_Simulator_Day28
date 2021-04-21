@@ -1,5 +1,9 @@
 package comAddressBook;
 
+import com.opencsv.exceptions.CsvDataTypeMismatchException;
+import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
+
+import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -10,7 +14,7 @@ public class AddressBookSimulator {
     ScannerForAddressBook scannerForAddressBook = initializeScanner();
     static AddressBookSimulator addressBookSimulator = new AddressBookSimulator();
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws CsvRequiredFieldEmptyException, CsvDataTypeMismatchException, IOException {
         ScannerForAddressBook scannerForAddressBook = initializeScanner();
 
         System.out.println("Welcome to address book simulator!");
@@ -68,7 +72,7 @@ public class AddressBookSimulator {
     /**
      * Access existing Book
      */
-    public void accessBook(){
+    public void accessBook() throws CsvRequiredFieldEmptyException, CsvDataTypeMismatchException, IOException {
         System.out.println("Enter the name of the book to access it");
         Object bookName1 = scannerForAddressBook.scannerProvider().nextLine();
         if(addressBookSimulator.booksMap.containsKey(bookName1)) {
