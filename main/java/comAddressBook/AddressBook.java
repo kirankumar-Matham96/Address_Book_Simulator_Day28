@@ -19,7 +19,7 @@ public class AddressBook {
     /**
      * method to add new contact from the console
      */
-    public void addContact() throws CsvRequiredFieldEmptyException, CsvDataTypeMismatchException, IOException {
+    public void addContact(String bookName) throws CsvRequiredFieldEmptyException, CsvDataTypeMismatchException, IOException {
         Contacts contacts = new Contacts();
         System.out.println("Please enter first name");
         contacts.setFirstName(scannerForAddressBook.scannerProvider().nextLine());
@@ -38,9 +38,10 @@ public class AddressBook {
         System.out.println("Please enter phone number");
         contacts.setPhoneNumber(scannerForAddressBook.scannerProvider().nextLine());
         contactsList.add(contacts);//adding to the list
-        contactsFileIOService.writeToFile(contactsList);//writing into the file
-        contactsFileIOService.printData();//print data from the file to the console
-        contactsFileIOService.writeToCSVFile(contactsList);//writing list to the CSV file
+        contactsFileIOService.writeToNormalFile(contactsList,bookName);//writing into the file
+        contactsFileIOService.printData(bookName);//print data from the file to the console
+        contactsFileIOService.writeToCSVFile(contactsList,bookName);//writing list to the CSV file
+        contactsFileIOService.writeToJson(contactsList,bookName);
     }
 
     /**
@@ -151,7 +152,7 @@ public class AddressBook {
     /**
      * to access the book
      */
-    public void accessAddressBook() throws CsvRequiredFieldEmptyException, CsvDataTypeMismatchException, IOException {
+    public void accessAddressBook(String bookName) throws CsvRequiredFieldEmptyException, CsvDataTypeMismatchException, IOException {
         boolean isExit = false;
         while (!isExit) {
             System.out.println("Select option: \n1.Add Contact\n2.Edit Contact\n" +
@@ -160,7 +161,7 @@ public class AddressBook {
             switch (option) {
                 case 1:
                     if (!isContactExist(getName())) {
-                        addContact();
+                        addContact(bookName);
                     } else {
                         System.out.println("Contact already exists!");
                     }

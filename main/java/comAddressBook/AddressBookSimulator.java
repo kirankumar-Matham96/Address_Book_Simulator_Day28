@@ -2,7 +2,6 @@ package comAddressBook;
 
 import com.opencsv.exceptions.CsvDataTypeMismatchException;
 import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
-
 import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -77,7 +76,8 @@ public class AddressBookSimulator {
         Object bookName1 = scannerForAddressBook.scannerProvider().nextLine();
         if(addressBookSimulator.booksMap.containsKey(bookName1)) {
             AddressBook addressBook = addressBookSimulator.booksMap.get(bookName1);
-            addressBook.accessAddressBook();
+            //converts object to string so that correct book is selected for writing to files
+            addressBook.accessAddressBook((String) bookName1);
             System.out.println("sorted contacts: "+addressBookSimulator.booksMap.toString());
         }
     }
@@ -145,10 +145,10 @@ public class AddressBookSimulator {
             System.out.println(entry.getKey());
             System.out.println("Contacts in a city/state: " +
                     entry.getValue()
-                            .getContactsList().stream()
-                            .filter(contact -> contact.getCity().equals(placeName2) ||
-                                    contact.getState().equals(placeName2))
-                            .count());
+                         .getContactsList().stream()
+                         .filter(contact -> contact.getCity().equals(placeName2) ||
+                                 contact.getState().equals(placeName2))
+                         .count());
         });
     }
 
@@ -191,10 +191,10 @@ public class AddressBookSimulator {
     public void sortByFirstName() {
         addressBookSimulator.booksMap.entrySet().forEach(entry -> {
             System.out.println("sorted contacts by first name: " + entry.getValue()
-                    .getContactsList()
-                    .stream()
-                    .sorted(Comparator.comparing(Contacts::getFirstName))
-                    .collect(Collectors.toList()));
+                      .getContactsList()
+                      .stream()
+                      .sorted(Comparator.comparing(Contacts::getFirstName))
+                      .collect(Collectors.toList()));
         });
     }
 

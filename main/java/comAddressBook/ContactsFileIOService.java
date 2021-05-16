@@ -2,7 +2,6 @@ package comAddressBook;
 
 import com.opencsv.exceptions.CsvDataTypeMismatchException;
 import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
-
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -10,14 +9,21 @@ import java.nio.file.Paths;
 import java.util.List;
 
 public class ContactsFileIOService {
-    public static String ADDRESS_BOOK_FILE_NAME = "Contacts.txt";
+
+    /**
+     * Writes to a json file
+     */
+    public void writeToJson(List<Contacts> contactsList,String bookName){
+        JsonFileHandler jsonFileHandler = new JsonFileHandler(bookName);
+        jsonFileHandler.jsonWriter(contactsList);
+    }
 
     /**
      * writes to a CSV file
      * @param contactsList
      */
-    public void writeToCSVFile(List<Contacts> contactsList) throws IOException, CsvRequiredFieldEmptyException, CsvDataTypeMismatchException {
-        CSVFileHandler csvFileHandler = new CSVFileHandler();
+    public void writeToCSVFile(List<Contacts> contactsList,String bookName) throws IOException, CsvRequiredFieldEmptyException, CsvDataTypeMismatchException {
+        CSVFileHandler csvFileHandler = new CSVFileHandler(bookName);
         csvFileHandler.csvWriter(contactsList);
     }
 
@@ -25,22 +31,22 @@ public class ContactsFileIOService {
      * writes to a text file
      * @param contactsList
      */
-    public void writeToFile(List<Contacts> contactsList) {
+    public void writeToNormalFile(List<Contacts> contactsList, String bookName) {
         StringBuffer contactBuffer = new StringBuffer();
         contactsList.forEach(contacts -> {
             String contact = contacts.toString().concat("\n");
             contactBuffer.append(contact);
         });
         try {
-            Files.write(Paths.get(ADDRESS_BOOK_FILE_NAME), contactBuffer.toString().getBytes());
+            Files.write(Paths.get(bookName+".txt"), contactBuffer.toString().getBytes());
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void printData() {
+    public void printData(String bookName) {
         try {
-            Files.lines(new File(ADDRESS_BOOK_FILE_NAME).toPath()).forEach(System.out::println);
+            Files.lines(new File(bookName+".txt").toPath()).forEach(System.out::println);
         } catch (IOException e) {
             e.printStackTrace();
         }
