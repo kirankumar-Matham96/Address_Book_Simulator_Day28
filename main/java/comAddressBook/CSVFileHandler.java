@@ -14,21 +14,22 @@ import java.util.List;
 public class CSVFileHandler {
     private static String FILE_NAME;
 
+    /**
+     * when a new address book created, a new file should be created as well.
+     * Also should select the correct file for the operations like editing or adding new contact.
+     * constructor will achieve these things.
+     */
     public CSVFileHandler(String file_name) {
         this.FILE_NAME = (file_name+".csv");
     }
 
     /**
-     * when a new address book created, a new file should be created as well.
-     * Also should select the correct file for the operations like editing or adding new contact.
-     * fileSelector method will achieve these things.
+     * writes data to csv file
+     * @param contactsList
+     * @throws IOException
+     * @throws CsvRequiredFieldEmptyException
+     * @throws CsvDataTypeMismatchException
      */
-
-//    public void fileSelector(String file_name){
-//        this.FILE_NAME = file_name;
-//    }
-//    private static String FILE_NAME = "Contacts.csv";
-
     public void csvWriter(List<Contacts> contactsList) throws IOException, CsvRequiredFieldEmptyException, CsvDataTypeMismatchException {
 
         Writer writer = Files.newBufferedWriter(Paths.get(FILE_NAME));

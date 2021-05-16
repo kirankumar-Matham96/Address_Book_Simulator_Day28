@@ -2,7 +2,6 @@ package comAddressBook;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-
 import java.io.IOException;
 import java.io.Writer;
 import java.nio.file.Files;
@@ -11,10 +10,19 @@ import java.util.List;
 
 public class JsonFileHandler {
     private String fileName;
+
+    /**
+     * constructor to select the proper file
+     * @param bookName
+     */
     public JsonFileHandler(String bookName) {
         this.fileName = bookName+".json";
     }
 
+    /**
+     * writes the data to json file
+     * @param contactsList
+     */
     public void jsonWriter(List<Contacts> contactsList) {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         Writer writer = null;

@@ -44,6 +44,10 @@ public class ContactsFileIOService {
         }
     }
 
+    /**
+     * prints data from text file
+     * @param bookName
+     */
     public void printData(String bookName) {
         try {
             Files.lines(new File(bookName+".txt").toPath()).forEach(System.out::println);

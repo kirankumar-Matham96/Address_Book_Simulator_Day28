@@ -41,7 +41,7 @@ public class AddressBook {
         contactsFileIOService.writeToNormalFile(contactsList,bookName);//writing into the file
         contactsFileIOService.printData(bookName);//print data from the file to the console
         contactsFileIOService.writeToCSVFile(contactsList,bookName);//writing list to the CSV file
-        contactsFileIOService.writeToJson(contactsList,bookName);
+        contactsFileIOService.writeToJson(contactsList,bookName);//writing to json
     }
 
     /**
@@ -184,7 +184,6 @@ public class AddressBook {
                     }
                     break;
                 default:
-//                    contactsFileIOService.writeToCSVFile();
                     System.out.println("Thanks!");
                     isExit = true;
             }

@@ -3,6 +3,9 @@ package comAddressBook;
 
 import com.opencsv.bean.CsvBindByPosition;
 
+/**
+ * simploe POJO for address book
+ */
 public class Contacts {
     @CsvBindByPosition(position = 0)
     private String firstName;
